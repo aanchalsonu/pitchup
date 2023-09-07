@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2>My Pitches</h2>
+            <div class="row">
+                {% for pitch in user_pitches %}
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pitch.pitch_title }}</h5>
+                            <p class="card-text">{{ pitch.pitch_description }}</p>
+                            <p class="card-text">Category: {{ pitch.pitch_category }}</p>
+                            {% if pitch.pitch_images %}
+                            <img src="{{ pitch.pitch_images.url }}" alt="Pitch Image" style="max-width: 100%;">
+                            {% endif %}
+                            <form method="post" action="{% url 'pitch:delete_pitch' pitch.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

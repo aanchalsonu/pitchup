@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<style>
+   
+    .login-form input[type="text"],
+    .login-form input[type="submit"]
+    {
+        width: 100%;
+        min-width: 250px;
+        max-width: 400px;
+        border: none;
+        border-radius: 24px;
+        font-size: 1rem;
+        font-family: 'Raleway', sans-seriff;
+        background-color: gainsboro;
+        padding: 15px;
+    }
+    
+    .login-form input[type="text"]:focus{
+        border: 2px #21D4FD solid;
+    }
+
+    .login-form input[type="text"]:hover {
+        opacity: 0.8;
+    }
+
+    .login-form input[type="submit"],
+    input[type="button"] {
+        background-color: #E0E0E0;
+        /* background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%); */
+        width: 100%;
+        color: white;
+        border: none;
+        margin-top: 35px;
+        cursor: pointer;
+        padding: 10px;
+        font-family: 'Raleway', sans-seriff;
+        font-size: 1.3rem;
+        font-weight: bold;
+        border-radius: 24px;
+        transition: 0.25s;
+    }
+
+    .login-form input[type="submit"]:hover {
+        opacity: 0.8;
+    }
+
+    .profile-image {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    .profile-image img {
+        max-width: 150px;
+        border-radius: 50%;
+        border: 3px solid white;
+    }
+
+    .image-section {
+        flex: 1;
+        padding: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: -160px;
+    }
+    .image-section img {
+        width: 130%;
+        height: auto;
+    }    
+
+</style>
+
+<body>
+    <div class="container bootstrap snippets bootdeys">
+        <div class="row">
+            <div class=" col-sm-8 col-sm-8" style="margin-top: 10%;margin-bottom: 23%; overflow-x: hidden;">
+                <form method="post" action="{% url 'post:newpost' %}" enctype="multipart/form-data" class="form-section login-form">
+                    {% csrf_token %}
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="my-3">
+                                {{form.as_p}}
+                            </div>
+                        </div>
+                    </div>       
+                    <input type="submit" value="Add Post" style="color: black;">
+                </form>
+            </div>
+            <div class="image-section">
+                <img src="{% static 'images/addpost.png' %}" alt="Signup Image" >
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock content %}

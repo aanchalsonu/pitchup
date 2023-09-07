@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <h2>Submitted Pitches</h2>
+            <div class="row">
+                {% for pitch in pitches %}
+                <div class="col-md-5 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3><a href="{% url 'profile' username=pitch.user.username %}" style="text-decoration: none;">{{ pitch.user.username }}</a></h3>
+                            <p>{{ pitch.pitch_title }}</p>
+                            <p>{{ pitch.pitch_description }}</p>
+                            <p>Category: {{ pitch.pitch_category }}</p>
+                            {% if pitch.pitch_images %}
+                            <img src="{{ pitch.pitch_images.url }}" alt="Pitch Image" class="img-fluid">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

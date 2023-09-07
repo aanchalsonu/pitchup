@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<style>
+    .login-form input[type="text"],
+    .login-form input[type="submit"]
+    {
+        width: 100%;
+        min-width: 250px;
+        max-width: 400px;
+        border: none;
+        border-radius: 24px;
+        font-size: 1rem;
+        font-family: 'Raleway', sans-seriff;
+        background-color: gainsboro;
+        padding: 15px;
+    }
+    
+    .login-form input[type="text"]:focus{
+        border: 2px #21D4FD solid;
+    }
+
+    .login-form input[type="text"]:hover {
+        opacity: 0.8;
+    }
+
+    .login-form input[type="submit"],
+    input[type="button"] {
+        background-color: #E0E0E0;
+        /* background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%); */
+        width: 100%;
+        color: white;
+        border: none;
+        margin-top: 35px;
+        cursor: pointer;
+        padding: 10px;
+        font-family: 'Raleway', sans-seriff;
+        font-size: 1.3rem;
+        font-weight: bold;
+        border-radius: 24px;
+        transition: 0.25s;
+    }
+
+    .login-form input[type="submit"]:hover {
+        opacity: 0.8;
+    }
+
+    .profile-image {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    .profile-image img {
+        max-width: 150px;
+        border-radius: 50%;
+        border: 3px solid white;
+    }
+
+    .image-section {
+        flex: 1;
+        padding: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: -160px;
+    }
+    .image-section img {
+        width: 130%;
+        height: auto;
+    }
+
+    
+
+</style>
+
+<div class="container bootstrap snippets bootdeys">
+    <div class="row">
+        <div class="col-xs-12 col-sm-9" style="margin-top: 8%; margin-bottom: 4%;">
+            <form class="form-horizontal login-form" method="post" enctype="multipart/form-data" role="form" style="padding-left: 160px;">
+                {% csrf_token %}
+                <!-- <div class="panel panel-default">
+                    <div class="profile-image">
+                        <img src="{{ form.picture }}" class="img-circle profile-avatar" alt="User avatar">
+                    </div>
+                </div> -->
+                <div class="panel panel-default" style="width: 80%; ">
+                    <div class="panel-heading">
+                        <h4 class="panel-title my-4">User info</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="my-3">
+                                <label class="col-sm-2 control-label">Profile Picture</label>
+                                    {{ form.picture}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="my-3">
+                                <label class="col-sm-2 control-label">Email</label>
+                                    {{ form.first_name }}
+                            </div>
+                        </div>
+                    </div>
+                                   
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="my-3">
+                                <label class="col-sm-2 control-label">Founders & Start Date</label>
+                                    {{ form.last_name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="my-3">
+                                <label class="col-sm-2 control-label">Location</label>
+                                    <select name="location">
+                                        <option selected="">Select country</option>
+                                        <option>USA</option>
+                                        <option>India</option>
+                                        <option>Denmark</option>
+                                        <option>Estonia</option>
+                                        <option>France</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="my-3">
+                            <p class="h3">Location :
+                                {{ form.location }}
+                            </p>
+                        </div> -->
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="my-3">
+                                    <label class="col-sm-2 control-label">URL</label>
+                                        {{ form.url}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="my-3">
+                                    <label class="col-sm-2 control-label">Profile Info</label>
+                                        {{ form.profile_info}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save Profile" style="color: black;">
+                </div>
+            </form>
+        </div>
+        <div class="image-section" style="padding-left: -20px;">
+            <img src="{% static 'images/editprofile.png' %}" alt="Signup Image" >
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

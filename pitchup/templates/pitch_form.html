@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2>Submit Your Pitch</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="pitchTitle" class="form-label">Pitch Title</label>
+                        <input type="text" class="form-control" id="pitchTitle" name="pitch_title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pitchDescription" class="form-label">Pitch Description</label>
+                        <textarea class="form-control" id="pitchDescription" name="pitch_description" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pitchCategory" class="form-label">Category</label>
+                        <select class="form-select" id="pitchCategory" name="pitch_category" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="technology">Technology</option>
+                            <option value="health">Health</option>
+                            <option value="business">Business</option>
+                            <!-- Add more categories here -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pitchImage" class="form-label">Upload Image</label>
+                        <input type="file" class="form-control" id="pitchImage" name="pitch_images">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Pitch</button>
+                </form>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

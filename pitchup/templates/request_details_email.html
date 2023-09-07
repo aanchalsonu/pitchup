@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Request for Further Details</title>
+</head>
+<body>
+    <p>Hello {{ recipient.username }},</p>
+
+    <p>You have received a request from {{ requester.username }} for further details.</p>
+
+    <p>The requester has provided the following information:</p>
+
+    <ul>
+        <li><strong>Name:</strong> {{ requester.profile.first_name }} {{ requester.profile.last_name }}</li>
+        <li><strong>Email:</strong> {{ requester.email }}</li>
+        <li><strong>Location:</strong> {{ requester.profile.location }}</li>
+        <!-- Add more requester's profile fields as needed -->
+    </ul>
+
+    <p>Please respond to this request as soon as possible to provide the requested details.</p>
+
+    <p>If you have any questions or need further assistance, please don't hesitate to contact us.</p>
+
+    <p>Best regards,<br>PitchUp</p>
+</body>
+</html>

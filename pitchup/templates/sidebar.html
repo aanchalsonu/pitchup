@@ -1,0 +1,127 @@
+{% block sidebar %}
+
+<style>
+  .card {
+    box-shadow: 0 16px 48px #6a6a6b;
+  }
+</style>
+
+<!-- Sidebar Widgets Column -->
+<div class="col-md-4 float-right ">
+  <div class="card my-4">
+    <h5 class="card-header">About</h5>
+    <div class="card-body">
+        <div class="profile mr-3" style="color: black;">
+          {% if profile.picture %}
+          <img src="{{ profile.picture.url }}" alt="{{ profile.user.username }}" class="img-fluid">
+          {% endif %}
+            <div class="media-body mb-3 text-black">
+                <h6 class="mt-0 mb-0 bounce-in-right">
+                    {{ profile.first_name }}{{" "}}</h6>
+                <!-- <small class="mt-0 mb-0"><em>@{{ profile.user }}</em></small> -->
+                <h6 class="mt-0 mb-0 bounce-in-right">About Us : {{profile.last_name}}</h6>
+                <p class="small mb-2">Founders: {{profile.last_name}}
+                </p>
+                <p class="small mb-2">Location: {{profile.location}}
+                </p>
+                <p class="small mb-2"> URL: {{profile.url}}
+                </p>
+                <p class="small mb-2">Bio: {{profile.profile_info}}
+                </p>
+            </div>
+            {% if user.is_authenticated and user == profile.user %}
+                <!-- Display the "Edit Profile" button only if the user is logged in and viewing their own profile -->
+                <a href="{% url 'account:edit-profile' %}" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+            {% endif %}
+            <!-- <a href="{% url 'account:edit-profile' %}"
+                class="btn btn-outline-dark btn-sm btn-block ">Edit profile</a> -->
+                {% if user.is_authenticated and user != profile.user %}
+                <!-- Display the "Request" button only if the user is logged in and viewing someone else's profile -->
+                <form method="post" id="email-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="recipient-username" value="{{ profile.user.username }}">
+                    <p class="small mb-2 mt-3">To send a mail request to the user click on the below button</p>
+                    <button type="submit" class="btn btn-outline-dark btn-sm btn-block">Request</button>
+                </form>
+                {% endif %}
+                  
+                {% if user.is_authenticated and user == profile.user %}
+                <form method="post" action="{% url 'pitch:submit_pitch' %}" id="pitch-form">
+                    {% csrf_token %}
+                    <p class="small mt-3">Make a Pitch</p>
+                    <button type="submit" class="btn btn-outline-dark btn-sm btn-block ">Make a Pitch</button>
+                </form>
+                {% endif %}
+
+                {% if user.is_authenticated and user == profile.user %}
+                <form method="post" action="{% url 'pitch:my_pitches' %}">
+                  {% csrf_token %}
+                  <p class="small mt-3">See my pitches</p>
+                  <button type="submit" class="btn btn-outline-dark btn-sm btn-block mt-2">My Pitches</button>
+                </form>
+                {% endif %}
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   $(document).ready(function() {
+  $('#email-form').on('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Extract the recipient username from the hidden input field
+    var recipientUsername = $('#recipient-username').val();
+
+    // Submit the form using AJAX
+    $.ajax({
+      type: 'POST',
+      url: '{% url "emailtask:request-details" %}' + recipientUsername + '/', // Include the username in the URL
+      data: $('#email-form').serialize(),
+      success: function(response) {
+        // Display the popup with the response message
+        alert('Email sent successfully');
+      },
+      error: function() {
+        alert('An error occurred while sending the email.');
+      }
+    });
+  });
+});
+
+</script>
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Listen for the form submission event
+        document.querySelector('#email-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get the username from the input field
+            var username = $('#username-input').val();
+
+            // Perform the form submission via AJAX with the retrieved username
+            fetch("{% url 'emailtask:request-details' %}" + username + '/', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show a pop-up message on success
+                    alert(data.message);
+                }
+            })
+            .catch(error => {   
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
+{% endblock %}
+{% endblock sidebar %}
